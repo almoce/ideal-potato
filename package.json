@@ -1,0 +1,25 @@
+{
+  "name": "ideal-potato",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "http-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/almoce/ideal-potato.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/almoce/ideal-potato/issues"
+  },
+  "homepage": "https://github.com/almoce/ideal-potato#readme",
+  "dependencies": {
+    "three": "^0.138.3"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.0"
+  }
+}

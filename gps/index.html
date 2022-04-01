@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <link rel="stylesheet" href="">
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+    </style>
+</head>
+<body>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "../node_modules/three/build/three.module.js"
+            }
+        }
+    </script>
+    <script type="module">
+        import * as T from 'three'
+        import GUI from '../node_modules/three/examples/jsm/libs/lil-gui.module.min.js';
+        import {OrbitControls} from '../node_modules/three/examples/jsm/controls/OrbitControls.js'
+        import { CSS2DRenderer, CSS2DObject } from '../node_modules/three/examples/jsm/renderers/CSS2DRenderer.js';
+
+        const gui = new GUI()
+
+        const scene = new T.Scene()
+        const camera = new T.PerspectiveCamera()
+
+        const render = new  T.WebGLRenderer()
+        const pointer = new T.Vector2()
+        camera.position.set(1, 2, 3)
+
+
+        const labelRenderer = new CSS2DRenderer();
+        labelRenderer.setSize( window.innerWidth, window.innerHeight );
+        labelRenderer.domElement.style.position = 'absolute';
+        labelRenderer.domElement.style.top = '0px';
+        document.body.appendChild( labelRenderer.domElement );
+        const control = new OrbitControls(camera, labelRenderer.domElement)
+       
+        render.setSize(window.innerWidth, window.innerHeight)
+        document.body.append(render.domElement)
+
+
+        const update = (t) => {
+            render.render(scene, camera)
+            labelRenderer.render( scene, camera );
+            control.update()
+            requestAnimationFrame(update)
+        }
+        update()
+
+        window.T = T
+        let filename = ['20081023025304.plt']
+
+        const c = gui.add({data: ''}, 'data', filename).onChange(v => {
+            fetch('/gps/data/'+v).then(res => res.text()).then(res => {
+                const data = res.split('\n').slice(6).filter(i => i).map(i => {
+                    const v = i.split(',')
+                    return [v[0], v[1]]
+                })
+                drapath(data)    
+            })
+        })
+
+        // let i = 0
+        // setInterval(() => {
+        //     i++
+        //     c.setValue(filename[i])
+        // }, 1000)
+
+
+        let g = null
+        function drapath(d) {
+            if (g) {
+                g.removeFromParent()
+            }
+            const base = new T.Vector2().fromArray(d[0])
+            const dataNormalize = d.map(i => {
+                const v = new T.Vector2().fromArray(i)
+                v.sub(base).multiplyScalar(50)
+                return new T.Vector3(v.x * -1, 0, v.y)
+            })
+            const geometry = new T.BufferGeometry().setFromPoints(dataNormalize)
+            const p = new T.Points(geometry, new T.PointsMaterial( { size: 0.002, color: 'yellow'}))
+            const l = new T.Line(geometry, new T.PointsMaterial( { size: 0.002, color: 'green'}))
+            g = new T.Group()
+            g.add(p, l)
+            scene.add(g)
+        }
+
+//         { // projection
+//             const R = 5
+//             const dataNormalize = data.map(i => {
+//                 const lat = i[0]
+//                 const lon = i[1]
+//                 const x = R * Math.cos(lat) * Math.cos(lon)
+//                 const y = R * Math.cos(lat) * Math.sin(lon)
+//                 const z = R * Math.sin(lat)
+//                 return new T.Vector3(x, y, z)
+// 
+//             })
+//             const geometry = new T.BufferGeometry().setFromPoints(dataNormalize)
+//             const mesh = new T.Line(geometry, new T.PointsMaterial( { size: 0.002, color: 'red'}))
+//             scene.add(mesh)
+//         }
+
+        const axiHelper = new T.AxesHelper(1)
+        scene.add(axiHelper)
+
+
+    </script>
+
+</body>
+</html>
