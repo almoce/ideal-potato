@@ -54,11 +54,54 @@
             requestAnimationFrame(update)
         }
         update()
-        
+
+
+
         const boxBuffer = new T.BoxBufferGeometry(2, 2, 2)
         const mesh = new T.Mesh(boxBuffer, new T.MeshNormalMaterial({wireframe: true}))
 
-        scene.add(mesh)
+        const vector = new T.Vector3()
+        const points = []
+
+
+        for(let i = 0; i < boxBuffer.attributes.position.count; i++) {
+            vector.fromBufferAttribute(boxBuffer.attributes.position, i)
+
+            const v = vector.clone()
+
+            let exit = 0
+            points.forEach((n) => n.equals(v) && exit++)
+
+            points.push(v)
+            
+            const div = document.createElement('div')
+            {
+                const span = document.createElement('span')
+                span.innerText = `${i}`
+                span.style.cssText = `color: #000; background: #fff; border-radius: 2px; margin-right: 5px; padding: 2px`
+                div.appendChild(span)
+            }
+            
+            {
+                const span = document.createElement('span')
+                span.innerText = `${v.x}, ${v.y}, ${v.z}`
+                span.style.cssText = `color: #000; background: #fff; border-radius: 2px; padding: 2px;`
+                div.appendChild(span)
+            }
+
+            div.style.cssText = `font-size: 12px; padding: 1px 2px;`
+
+            const mesh =  new CSS2DObject(div)
+            mesh.position.copy(v).multiplyScalar(1.1)
+            mesh.position.y-= exit*0.1
+            scene.add(mesh)
+            gui.add({v: `${v.x}, ${v.y}, ${v.z}`}, 'v').name(i)
+        }
+
+        const pointBuffer = new T.BufferGeometry().setFromPoints(points)
+        const pointMesh = new T.Points(pointBuffer, new T.PointsMaterial({size: 0.05}))
+
+        scene.add(mesh, pointMesh)
     </script>
 </body>
 </html>
