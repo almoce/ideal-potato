@@ -23,23 +23,28 @@
     </script>
 
     <script type="x-shader/x-vertex" id="vertexshader">
-    varying vec3 pos;
+    varying vec3 v_pos;
     varying vec2 v_uv;
+    uniform float time;
     void main() {
         vec3 nPos = position;
         v_uv = uv;
-        pos = nPos;
+        v_pos = position;
         gl_Position = projectionMatrix * modelViewMatrix * vec4(nPos, 1.0);
     }
     </script>
 
     <script type="x-shader/x-fragment" id="fragmentshader">
-    varying vec3 pos;
+    varying vec3 v_pos;
     varying vec2 v_uv;
+    uniform float time;
     void main() {
-        float x = v_uv.x > 0.5 ? pos.x : v_uv.x;
-        // x = smoothstep(0.01, 0.01, x);
-        gl_FragColor = vec4(x, 0.0, 0.0, 1.0);
+        float x = v_uv.x > 0.5 ? v_pos.x : v_uv.x;
+        vec2 center_uv = v_uv * 2.0 - 1.0;
+        float lx = 1. - length(center_uv);
+        lx = smoothstep(0.2, 0.8, lx);
+        vec3 color = vec3(x, 0.0, 0.0);
+        gl_FragColor = vec4(color, lx);
     }
     </script>
 
@@ -70,21 +75,30 @@
         render.setSize(window.innerWidth, window.innerHeight)
         document.body.append(render.domElement)
 
+        scene.background = new T.Color('#999')
+
+        const shader = new T.ShaderMaterial({
+            uniforms: {
+                time: {
+                    value: 0.0
+                },
+            },
+            transparent: true,
+            vertexShader: document.getElementById( 'vertexshader' ).textContent,
+            fragmentShader: document.getElementById( 'fragmentshader' ).textContent
+        })
+
         const update = (t) => {
             render.render(scene, camera)
             labelRenderer.render( scene, camera );
             control.update()
             requestAnimationFrame(update)
+            if (shader) {
+                shader.uniforms.time.value = t * 0.007;
+                // shader.uniforms.time.value = t * 0.1
+            }
         }
         update()
-        
-
-        scene.background = new T.Color('#999')
-
-        const shader = new T.ShaderMaterial({
-            vertexShader: document.getElementById( 'vertexshader' ).textContent,
-            fragmentShader: document.getElementById( 'fragmentshader' ).textContent
-        })
 
 
         const boxBuffer = new T.BufferGeometry()
