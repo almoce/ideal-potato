@@ -1,10 +1,13 @@
 {
   "name": "ideal-potato",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "threejs learning",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "http-server"
+    "dev": "turbo run dev"
   },
   "repository": {
     "type": "git",
@@ -16,13 +19,11 @@
     "url": "https://github.com/almoce/ideal-potato/issues"
   },
   "homepage": "https://github.com/almoce/ideal-potato#readme",
-  "dependencies": {
-    "@tweenjs/tween.js": "^18.6.4",
-    "es-module-shims": "^1.5.4",
-    "three": "^0.138.3"
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=14.0.0"
   },
   "devDependencies": {
-    "es-module-shims": "^1.5.4",
-    "http-server": "^14.1.0"
+    "turbo": "^1.3.1"
   }
 }
