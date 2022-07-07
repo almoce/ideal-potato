@@ -1,6 +1,5 @@
-
-
 import * as T from 'three'
+//@ts-ignore
 import GUI from 'three/examples/jsm/libs/lil-gui.module.min.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
@@ -38,7 +37,6 @@ const scene = new T.Scene()
 const camera = new T.PerspectiveCamera(65, window.innerWidth / window.innerHeight)
 
 const render = new T.WebGLRenderer()
-const pointer = new T.Vector2()
 camera.position.set(0, 0, 7)
 
 
@@ -65,7 +63,7 @@ const shader = new T.ShaderMaterial({
     fragmentShader: fragmentshader
 })
 
-const update = (t) => {
+const update = (t: number) => {
     render.render(scene, camera)
     labelRenderer.render(scene, camera);
     control.update()
@@ -75,7 +73,7 @@ const update = (t) => {
         // shader.uniforms.time.value = t * 0.1
     }
 }
-update()
+update(0)
 
 
 const boxBuffer = new T.BufferGeometry()
@@ -110,10 +108,12 @@ const mesh = new T.Mesh(boxBuffer, shader)
     {
         const buff = new T.BufferGeometry()
         const arr = new Float32Array(12)
+        //@ts-ignore
         arr.forEach((i, idx) => arr[idx] = vertices[idx])
         arr[9] = arr[0]
         arr[10] = arr[1]
         arr[11] = arr[2]
+        //@ts-ignore
         arr.forEach((i, idx) => (idx + 1) % 3 === 0 && (arr[idx] += 0.01))
 
         buff.setAttribute('position', new T.BufferAttribute(arr, 3))
@@ -124,10 +124,12 @@ const mesh = new T.Mesh(boxBuffer, shader)
     {
         const buff = new T.BufferGeometry()
         const arr = new Float32Array(12)
+        //@ts-ignore
         arr.forEach((i, idx) => arr[idx] = vertices[idx + 9])
         arr[9] = arr[0]
         arr[10] = arr[1]
         arr[11] = arr[2]
+        //@ts-ignore
         arr.forEach((i, idx) => (idx + 1) % 3 === 0 && (arr[idx] += 0.01))
 
         buff.setAttribute('position', new T.BufferAttribute(arr, 3))

@@ -1,0 +1,11 @@
+[32mshadermat:build[0m: cache hit, replaying output [2m031dda9fe1689574[0m
+[32mshadermat:build: [0m
+[32mshadermat:build: [0m> shadermat@1.0.0 build
+[32mshadermat:build: [0m> tsc && vite build
+[32mshadermat:build: [0m
+[32mshadermat:build: [0mvite v2.9.13 building for production...
+[32mshadermat:build: [0mtransforming...
+[32mshadermat:build: [0m✓ 8 modules transformed.
+[32mshadermat:build: [0mrendering chunks...
+[32mshadermat:build: [0mdist/index.html                 0.71 KiB
+[32mshadermat:build: [0mdist/assets/index.49cf6f75.js   436.80 KiB / gzip: 112.91 KiB

@@ -1,5 +1,6 @@
 import * as T from 'three'
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls'
+//@ts-ignore
 import Gui from 'three/examples/jsm/libs/lil-gui.module.min.js'
 const gui = new Gui()
 const render = new T.WebGLRenderer()
@@ -9,7 +10,10 @@ const control = new OrbitControls(camera, render.domElement)
 // control.autoRotate = true
 render.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(render.domElement)
-const list = []
+interface fn {
+    (): void
+}
+const list: fn[] = []
 const update = () => {
     render.render(scene, camera)
     render.setAnimationLoop(update)

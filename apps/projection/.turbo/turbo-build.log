@@ -1,0 +1,11 @@
+[33mprojection:build[0m: cache hit, replaying output [2mddfb2352051015d5[0m
+[33mprojection:build: [0m
+[33mprojection:build: [0m> projection@1.0.0 build
+[33mprojection:build: [0m> tsc && vite build
+[33mprojection:build: [0m
+[33mprojection:build: [0mvite v2.9.13 building for production...
+[33mprojection:build: [0mtransforming...
+[33mprojection:build: [0m✓ 8 modules transformed.
+[33mprojection:build: [0mrendering chunks...
+[33mprojection:build: [0mdist/index.html                 0.71 KiB
+[33mprojection:build: [0mdist/assets/index.8f8716c6.js   437.87 KiB / gzip: 112.89 KiB
