@@ -1,0 +1,16 @@
+[32mrotation:build[0m: cache hit, replaying output [2m6ae8c49363e7c538[0m
+[32mrotation:build: [0m
+[32mrotation:build: [0m> rotation@1.0.0 build
+[32mrotation:build: [0m> tsc && vite build
+[32mrotation:build: [0m
+[32mrotation:build: [0mvite v2.9.13 building for production...
+[32mrotation:build: [0mtransforming...
+[32mrotation:build: [0m✓ 8 modules transformed.
+[32mrotation:build: [0mrendering chunks...
+[32mrotation:build: [0mdist/index.html                 0.71 KiB
+[32mrotation:build: [0mdist/assets/index.a8144021.js   628.75 KiB / gzip: 165.03 KiB
+[32mrotation:build: [0m
+[32mrotation:build: [0m(!) Some chunks are larger than 500 KiB after minification. Consider:
+[32mrotation:build: [0m- Using dynamic import() to code-split the application
+[32mrotation:build: [0m- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/guide/en/#outputmanualchunks
+[32mrotation:build: [0m- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.

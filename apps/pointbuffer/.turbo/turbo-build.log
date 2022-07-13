@@ -1,0 +1,11 @@
+[33mpointbuffer:build[0m: cache hit, replaying output [2m152447097d52f3c7[0m
+[33mpointbuffer:build: [0m
+[33mpointbuffer:build: [0m> pointbuffer@1.0.0 build
+[33mpointbuffer:build: [0m> tsc && vite build
+[33mpointbuffer:build: [0m
+[33mpointbuffer:build: [0mvite v2.9.13 building for production...
+[33mpointbuffer:build: [0mtransforming...
+[33mpointbuffer:build: [0m✓ 8 modules transformed.
+[33mpointbuffer:build: [0mrendering chunks...
+[33mpointbuffer:build: [0mdist/index.html                 0.71 KiB
+[33mpointbuffer:build: [0mdist/assets/index.5cfa302e.js   433.09 KiB / gzip: 111.53 KiB

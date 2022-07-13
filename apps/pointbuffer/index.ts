@@ -1,4 +1,5 @@
 import * as T from 'three'
+//@ts-ignore
 import GUI from 'three/examples/jsm/libs/lil-gui.module.min.js';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
 import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
@@ -9,7 +10,6 @@ const scene = new T.Scene()
 const camera = new T.PerspectiveCamera(65, window.innerWidth/window.innerHeight)
 
 const render = new  T.WebGLRenderer()
-const pointer = new T.Vector2()
 camera.position.set(0,0, 5)
 
 
@@ -23,7 +23,7 @@ const control = new OrbitControls(camera, labelRenderer.domElement)
 render.setSize(window.innerWidth, window.innerHeight)
 document.body.append(render.domElement)
 
-const update = (t) => {
+const update = () => {
     render.render(scene, camera)
     labelRenderer.render( scene, camera );
     control.update()

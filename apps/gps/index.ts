@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as T from 'three'
 import GUI from 'three/examples/jsm/libs/lil-gui.module.min.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
@@ -25,8 +26,7 @@ render.setSize(window.innerWidth, window.innerHeight)
 document.body.append(render.domElement)
 
 const g = new T.Group()
-const v = new T.Vector3()
-const update = (t) => {
+const update = () => {
     render.render(scene, camera)
     labelRenderer.render(scene, camera);
     // control.update()
@@ -35,7 +35,6 @@ const update = (t) => {
 }
 update()
 
-window.T = T
 let filename = ['20081023025304.plt', '20090520010901.plt']
 let datas = []
 let starttime = 0

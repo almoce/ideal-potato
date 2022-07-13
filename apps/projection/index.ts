@@ -1,4 +1,5 @@
 import * as T from 'three'
+//@ts-ignore
 import GUI from 'three/examples/jsm/libs/lil-gui.module.min.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
@@ -9,7 +10,6 @@ const scene = new T.Scene()
 const camera = new T.PerspectiveCamera()
 
 const render = new T.WebGLRenderer()
-const pointer = new T.Vector2()
 camera.position.set(1, 2, 3)
 
 
@@ -25,7 +25,7 @@ render.setSize(window.innerWidth, window.innerHeight)
 document.body.append(render.domElement)
 
 
-const update = (t) => {
+const update = () => {
     render.render(scene, camera)
     labelRenderer.render(scene, camera);
     control.update()
@@ -33,8 +33,6 @@ const update = (t) => {
 }
 update()
 
-const xyz = ['x', 'y', 'z']
-window.T = T
 
 {
     const g = new T.Group()
@@ -70,7 +68,20 @@ window.T = T
 
 
 class Line {
-    constructor(x, y, z, name, base, color) {
+    name: string
+    base: T.Vector3
+    vector: T.Vector3
+    group: T.Group
+    color: T.Color
+    material: T.LineBasicMaterial
+    controls: {
+        [key: string]: GUI
+    }
+    dashMaterial: T.LineDashedMaterial
+    line: T.Line
+    label: CSS2DObject
+    dashLines: T.Group
+    constructor(x:number, y: number, z: number, name: string, base?: T.Vector3, color?: T.Color) {
         this.name = name
         this.base = base || new T.Vector3(1, 0, 0)
         this.vector = new T.Vector3(x, y, z)
@@ -112,9 +123,10 @@ class Line {
 
     addControl() {
         const control = gui.addFolder(this.name)
-        const c = control.addColor(this.material, 'color').onChange(v => {
+        control.addColor(this.material, 'color').onChange((v: T.Color) => {
             this.dashMaterial.color = v
-            this.group.children[1].element.style.color = v.getStyle()
+            const target = this.group.children[1] as CSS2DObject
+            target.element.style.color = v.getStyle()
         })
         const options = {
             length: 0,
@@ -133,25 +145,28 @@ class Line {
         control.add(this.vector, 'z', -1, 1, 0.01).onChange(() => this.update()).listen()
         control.$title.addEventListener('click', () => {
             this.group.visible = !control._closed
-            this.group.children[1].element.style.visibility = !control._closed ? 'visible' : 'hidden'
+            const target = this.group.children[1] as CSS2DObject
+            target.element.style.visibility = !control._closed ? 'visible' : 'hidden'
         })
 
         this.update()
 
     }
 
-    setGeometry(m, v, o) {
+    setGeometry(m: T.Line, v: T.Vector3, o?: T.Vector3) {
         {
             const { x, y, z } = v
-            m.geometry.attributes.position.array[3] = x
-            m.geometry.attributes.position.array[4] = y
-            m.geometry.attributes.position.array[5] = z
+            const arr = m.geometry.attributes.position.array as number[]
+            arr[3] = x
+            arr[4] = y
+            arr[5] = z
         }
         if (o) {
             const { x, y, z } = o
-            m.geometry.attributes.position.array[0] = x
-            m.geometry.attributes.position.array[1] = y
-            m.geometry.attributes.position.array[2] = z
+            const arr = m.geometry.attributes.position.array as number[]
+            arr[0] = x
+            arr[1] = y
+            arr[2] = z
         }
 
         m.geometry.attributes.position.needsUpdate = true
@@ -180,7 +195,7 @@ class Line {
         this.setGeometry(this.line, this.vector)
         this.label.position.copy(this.vector)
 
-        const { length, dot, deg } = this.controls
+        const { length, dot} = this.controls
         length.setValue(this.vector.length().toFixed(2))
         const dotValue = this.vector.dot(this.base).toFixed(2)
         dot.setValue(dotValue)
@@ -221,24 +236,27 @@ function addGridSpace() {
     const group = new T.Group()
     {
         const grid = new T.GridHelper()
-        grid.material.color = new T.Color('green')
-        grid.material.opacity = 0.5
-        grid.material.transparent = true
+        const mat = grid.material as T.LineBasicMaterial
+        mat.color = new T.Color('green')
+        mat.opacity = 0.5
+        mat.transparent = true
         grid.rotation.x = 90 * Math.PI / 180
         group.add(grid)
     }
     {
         const grid = new T.GridHelper()
-        grid.material.color = new T.Color('red')
-        grid.material.opacity = 0.5
-        grid.material.transparent = true
+         const mat = grid.material as T.LineBasicMaterial
+        mat.color = new T.Color('red')
+        mat.opacity = 0.5
+        mat.transparent = true
         group.add(grid)
     }
     {
         const grid = new T.GridHelper()
-        grid.material.color = new T.Color('blue')
-        grid.material.opacity = 0.5
-        grid.material.transparent = true
+         const mat = grid.material as T.LineBasicMaterial
+        mat.color = new T.Color('blue')
+        mat.opacity = 0.5
+        mat.transparent = true
         grid.rotation.z = 90 * Math.PI / 180
         group.add(grid)
     }
