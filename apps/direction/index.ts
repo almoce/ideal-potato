@@ -49,14 +49,14 @@ scene.add(grid)
     const clonePosition = clone.position as T.Vector3
     const axiX = new T.Vector3(1,0,0)
     const axiY = new T.Vector3(0,-1,0)
-    console.log(degree)
     list.push(() => {
         direction.normalize()
-        const angle = direction.angleTo(axiX)
         mesh.position.copy(direction)
+        const angle = degree.object.v * Math.PI / 180
+
         camera.getWorldDirection(clonePosition)
         clonePosition.y = 0
         clonePosition.applyAxisAngle(axiY, angle)
-        // clonePosition.normalize()
+        clonePosition.normalize()
     })
 }
