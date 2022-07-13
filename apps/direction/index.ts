@@ -33,19 +33,26 @@ scene.add(grid)
     clone.material.color =  new T.Color('blue')
     scene.add(mesh, clone)
     const direction = new T.Vector3(1,0,0)
-    gui.add(direction, 'x', 0, 1).listen()
-    gui.add(direction, 'z', 0, 1).listen()
+    const degree = gui.add({v: 0}, 'v', 0, 360).name('Degree')
+    degree.onChange(v => {
+        // const angle = v * 180/Math.PI
+        const rad = v * Math.PI / 180
+        const x = Math.cos(rad)
+        const z = Math.sin(rad)
+        direction.x = x
+        direction.z = z
+    }) 
     const clonePosition = clone.position as T.Vector3
     const axiX = new T.Vector3(1,0,0)
-    const axiZ = new T.Vector3(0,1,0)
+    const axiY = new T.Vector3(0,-1,0)
+    console.log(degree)
     list.push(() => {
         direction.normalize()
         const angle = direction.angleTo(axiX)
         mesh.position.copy(direction)
         camera.getWorldDirection(clonePosition)
         clonePosition.y = 0
-        clonePosition.applyAxisAngle(axiZ, angle)
-        clonePosition.normalize()
-
+        clonePosition.applyAxisAngle(axiY, angle)
+        // clonePosition.normalize()
     })
 }
