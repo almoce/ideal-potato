@@ -1,5 +1,6 @@
 import * as T from 'three'
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls'
+import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib.js'
 //@ts-ignore
 import Gui from 'three/examples/jsm/libs/lil-gui.module.min.js'
 const gui = new Gui()
@@ -26,6 +27,7 @@ update()
 const cameraDistance = new T.Vector3(1,1.5,1).multiplyScalar(20)
 camera.position.copy(cameraDistance)
 
+RectAreaLightUniformsLib.init()
 
 camera.lookAt(0, 0, 0)
 const axeHelper = new T.AxesHelper(1)
@@ -45,6 +47,7 @@ scene.add(light)
 {
   const light = new T.RectAreaLight()
   light.position.set(0, 15, 0)
+  light.lookAt(0,0,0)
   scene.add(light)
 }
 
