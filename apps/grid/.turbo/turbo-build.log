@@ -1,0 +1,11 @@
+[36mdirection:build[0m: cache hit, replaying output [2m390bdf54ad7e2cdf[0m
+[36mdirection:build: [0m
+[36mdirection:build: [0m> direction@0.0.0 build
+[36mdirection:build: [0m> tsc && vite build
+[36mdirection:build: [0m
+[36mdirection:build: [0mvite v2.9.13 building for production...
+[36mdirection:build: [0mtransforming...
+[36mdirection:build: [0m✓ 7 modules transformed.
+[36mdirection:build: [0mrendering chunks...
+[36mdirection:build: [0mdist/index.html                 0.71 KiB
+[36mdirection:build: [0mdist/assets/index.860439ed.js   431.96 KiB / gzip: 111.04 KiB
